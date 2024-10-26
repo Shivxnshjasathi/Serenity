@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:neopop/widgets/buttons/neopop_tilted_button/neopop_tilted_button.dart';
-import 'package:serenity/UI/notifty.dart';
+import 'package:serenity/UI/landingscreens/notifyme.dart';
+import 'package:serenity/UI/mainscreen/mainchatscreen.dart';
 import 'package:serenity/constants/const.dart';
-import 'package:serenity/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
@@ -214,7 +213,7 @@ class _LandingPageState extends State<LandingPage> {
                         height: 20,
                       ),
                       Text(
-                          " Hello! I'm your companion.  How can I support you today?",
+                          " Hello! I'm your companion. How can I support you today ?",
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
