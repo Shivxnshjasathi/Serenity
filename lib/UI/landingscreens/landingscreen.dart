@@ -6,7 +6,9 @@ import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:neopop/widgets/buttons/neopop_tilted_button/neopop_tilted_button.dart';
 import 'package:serenity/UI/landingscreens/notifyme.dart';
 import 'package:serenity/UI/mainscreen/mainchatscreen.dart';
+import 'package:serenity/UI/sholak/readshloke.dart';
 import 'package:serenity/constants/const.dart';
+import 'package:serenity/constants/navbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
@@ -54,21 +56,13 @@ class _LandingPageState extends State<LandingPage> {
                                       color: bgColor,
                                       buttonPosition: Position.center,
                                       onTapUp: () {
-                                        () async {
-                                          Uri uri = Uri.parse(
-                                              'https://serenityai.vercel.app/');
-                                          if (await canLaunchUrl(uri)) {
-                                            await launchUrl(uri);
-                                          } else {
-                                            // ignore: use_build_context_synchronously
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      'Could not launch url')),
-                                            );
-                                          }
-                                        };
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Notifty(),
+                                            ));
+
                                         HapticFeedback.vibrate();
                                       },
                                       onTapDown: () => HapticFeedback.vibrate(),
@@ -83,7 +77,7 @@ class _LandingPageState extends State<LandingPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text("Try Web",
+                                            Text("Notifty Me",
                                                 style: GoogleFonts.poppins(
                                                   fontSize:
                                                       14, // You can adjust the size as needed
@@ -102,7 +96,8 @@ class _LandingPageState extends State<LandingPage> {
                             const SizedBox(
                               height: 40,
                             ),
-                            Text("Your AI Companion for Mental Wellness",
+                            Text(
+                                "Timeless Teachings for Today's Mind\nAncient Wisdom, Modern Peace",
                                 style: GoogleFonts.libreBaskerville(
                                   fontSize:
                                       18, // You can adjust the size as needed
@@ -114,7 +109,7 @@ class _LandingPageState extends State<LandingPage> {
                               height: 10,
                             ),
                             Text(
-                                "Serenity uses advanced AI to provide empathetic support grounded in the wisdom of the Bhagavad Gita, helping students navigate their emotional challenges and improve mental well-being.",
+                                "Serenity uses advanced AI to provide empathetic support and Religious Knowledge grounded in the wisdom of the Bhagavad Gita, helping Yougth navigate their emotional challenges and improve mental well-being.",
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -133,7 +128,7 @@ class _LandingPageState extends State<LandingPage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const Notifty(),
+                                        builder: (context) => NavBarScreen(),
                                       ));
                                   HapticFeedback.vibrate();
                                 },
@@ -142,7 +137,7 @@ class _LandingPageState extends State<LandingPage> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20, vertical: 15),
                                   child: Text(
-                                    "Notifty Me ",
+                                    "    Explore ",
                                     style: GoogleFonts.poppins(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -227,6 +222,7 @@ class _LandingPageState extends State<LandingPage> {
             NeoPopTiltedButton(
               isFloating: true,
               onTapUp: () {
+                HapticFeedback.vibrate();
                 Navigator.push(
                     context,
                     MaterialPageRoute(

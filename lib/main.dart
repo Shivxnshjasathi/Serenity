@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:serenity/UI/splash.dart';
 
 void main() {
@@ -22,6 +20,6 @@ class GenerativeAISample extends StatelessWidget {
           ),
           useMaterial3: true,
         ),
-        home: SplashScreen());
+        home: const SplashScreen());
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:serenity/constants/wedgets.dart';
-import 'package:serenity/main.dart';
 import 'package:url_launcher/link.dart';
 
 class ApiKeyWidget extends StatelessWidget {

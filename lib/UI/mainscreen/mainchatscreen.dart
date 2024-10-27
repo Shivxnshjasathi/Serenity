@@ -4,7 +4,6 @@ import 'package:serenity/UI/mainscreen/apistatus.dart';
 import 'package:serenity/UI/mainscreen/chatwedgit.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:serenity/constants/wedgets.dart';
-import 'package:serenity/main.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key, required this.title});

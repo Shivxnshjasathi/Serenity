@@ -14,8 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
-  late Animation<double> _opacityAnimation;
+
 
   @override
   void initState() {
@@ -26,22 +25,7 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
       vsync: this,
     );
-
-    // Scale animation: start from 0.2 (small) to 1 (normal size)
-    _scaleAnimation = Tween<double>(begin: 0.2, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeInOut, // Smooth in and out effect
-      ),
-    );
-
-    // Opacity animation: start from 0 (invisible) to 1 (fully visible)
-    _opacityAnimation = Tween<double>(begin: 0, end: 1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeIn, // Slow fade-in effect
-      ),
-    );
+    
 
     // Start the animations
     _controller.forward();
@@ -73,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 50,
                 ),
                 Row(
@@ -103,7 +87,7 @@ class _SplashScreenState extends State<SplashScreen>
                       fontWeight: FontWeight.w500,
                       color: Colors.white38,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text("Your Personal Mental,\nHealth Assistant",

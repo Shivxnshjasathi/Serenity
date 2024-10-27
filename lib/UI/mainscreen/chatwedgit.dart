@@ -6,7 +6,6 @@ import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/UI/mainscreen/messageswedgit.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:serenity/constants/wedgets.dart';
-import 'package:serenity/main.dart';
 
 class ChatWidget extends StatefulWidget {
   const ChatWidget({required this.apiKey, super.key});
