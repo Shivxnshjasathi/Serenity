@@ -133,16 +133,6 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 35),
-                    Text(
-                      'Pomodoro Spiritual Break',
-                      style: GoogleFonts.libreBaskerville(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Lottie.network(

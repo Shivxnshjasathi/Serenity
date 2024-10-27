@@ -14,7 +14,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    ShlokaScreen(),
+    SWidget(),
     PomodoroScreen(),
     storyWidget(),
   ];
@@ -58,38 +58,11 @@ class _NavBarScreenState extends State<NavBarScreen> {
             label: 'Timer',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.bookmark),
+            label: 'Story',
           ),
         ],
       ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Home Page', style: TextStyle(fontSize: 24)),
-    );
-  }
-}
-
-class ExplorePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Explore Page', style: TextStyle(fontSize: 24)),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Profile Page', style: TextStyle(fontSize: 24)),
     );
   }
 }

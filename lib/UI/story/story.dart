@@ -107,16 +107,6 @@ class _storyWidgetState extends State<storyWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Bhagavad Gita',
-                      style: GoogleFonts.libreBaskerville(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14.0,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 40),
                     MarkdownBody(
                       data: _story ?? 'Generating your first story...',
                       styleSheet: MarkdownStyleSheet(
@@ -155,37 +145,32 @@ class _storyWidgetState extends State<storyWidget> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    if (_loading)
-                      const CircularProgressIndicator(
-                        color: accentColor,
-                      )
-                    else
-                      NeoPopButton(
-                        color: Colors.black,
-                        bottomShadowColor: accentColor,
-                        depth: 5,
-                        onTapUp: () {
-                          _generateStory();
-                          HapticFeedback.vibrate();
-                        },
-                        onTapDown: () => HapticFeedback.vibrate(),
-                        parentColor: accentColor,
-                        buttonPosition: Position.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Generate New Story",
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  )),
-                            ],
-                          ),
+                    NeoPopButton(
+                      color: Colors.black,
+                      bottomShadowColor: accentColor,
+                      depth: 5,
+                      onTapUp: () {
+                        _generateStory();
+                        HapticFeedback.vibrate();
+                      },
+                      onTapDown: () => HapticFeedback.vibrate(),
+                      parentColor: accentColor,
+                      buttonPosition: Position.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Generate New Story",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                )),
+                          ],
                         ),
                       ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Lottie.network(
