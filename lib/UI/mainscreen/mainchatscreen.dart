@@ -61,16 +61,6 @@ class _ChatScreenState extends State<ChatScreen> {
                               fontWeight: FontWeight.w500,
                               color: Colors.white38,
                             )),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(
-                        //       8.0), // Optional padding for better layout
-                        //   child: Lottie.network(
-                        //     'https://lottie.host/0cc6c8e8-3f15-4ec7-8925-b5cbed3a43a7/xFUsBluOqj.json',
-                        //     width: 200,
-                        //     height: 200,
-                        //     fit: BoxFit.contain,
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

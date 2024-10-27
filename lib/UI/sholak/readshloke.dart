@@ -148,7 +148,6 @@ class _ShlokaScreenState extends State<ShlokaScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           color: Colors.white,
           child: Column(
             children: [

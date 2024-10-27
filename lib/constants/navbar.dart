@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
+import 'package:serenity/UI/story/story.dart';
 import 'package:serenity/UI/timer/timer.dart';
 import 'package:serenity/constants/const.dart';
 
@@ -15,7 +16,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
   final List<Widget> _pages = [
     ShlokaScreen(),
     PomodoroScreen(),
-    ProfilePage(),
+    storyWidget(),
   ];
 
   // Function to handle item taps in BottomNavigationBar
