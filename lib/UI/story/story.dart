@@ -60,6 +60,7 @@ class _storyWidgetState extends State<storyWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -67,6 +68,7 @@ class _storyWidgetState extends State<storyWidget> {
             children: [
               Container(
                 height: 200,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.black,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -108,7 +110,7 @@ class _storyWidgetState extends State<storyWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     MarkdownBody(
-                      data: _story ?? 'Generating your first story...',
+                      data: _story ?? '',
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
                             color: Colors.black, fontWeight: FontWeight.w400
@@ -145,32 +147,40 @@ class _storyWidgetState extends State<storyWidget> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    NeoPopButton(
-                      color: Colors.black,
-                      bottomShadowColor: accentColor,
-                      depth: 5,
-                      onTapUp: () {
-                        _generateStory();
-                        HapticFeedback.vibrate();
-                      },
-                      onTapDown: () => HapticFeedback.vibrate(),
-                      parentColor: accentColor,
-                      buttonPosition: Position.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Generate New Story",
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                )),
-                          ],
+                    if (_loading)
+                      Text('Generating your first Story...',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ))
+                    else
+                      NeoPopButton(
+                        color: Colors.black,
+                        bottomShadowColor: accentColor,
+                        depth: 5,
+                        onTapUp: () {
+                          _generateStory();
+                          HapticFeedback.vibrate();
+                        },
+                        onTapDown: () => HapticFeedback.vibrate(),
+                        parentColor: accentColor,
+                        buttonPosition: Position.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Generate New Story",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  )),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Lottie.network(

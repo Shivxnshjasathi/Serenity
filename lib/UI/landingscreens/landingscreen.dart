@@ -29,17 +29,16 @@ class _LandingPageState extends State<LandingPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 50,
-                ),
                 Container(
-                  height: 390,
                   color: const Color.fromARGB(255, 85, 85, 85).withOpacity(0.2),
                   child: Stack(
                     children: [
-                      CustomPaint(
-                        painter: GridPainter(),
-                        child: Container(),
+                      SizedBox(
+                        height: 450,
+                        child: CustomPaint(
+                          painter: GridPainter(),
+                          child: Container(),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -49,6 +48,9 @@ class _LandingPageState extends State<LandingPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
+                                SizedBox(
+                                  height: 90,
+                                ),
                                 Row(
                                   children: [
                                     NeoPopButton(
@@ -93,7 +95,7 @@ class _LandingPageState extends State<LandingPage> {
                               ],
                             ),
                             const SizedBox(
-                              height: 40,
+                              height: 20,
                             ),
                             Text(
                                 "Timeless Teachings for Today's Mind\nAncient Wisdom, Modern Peace",
@@ -218,47 +220,54 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ],
             ),
-            NeoPopTiltedButton(
-              isFloating: true,
-              onTapUp: () {
-                HapticFeedback.vibrate();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          const ChatScreen(title: 'Serenity AI'),
-                    ));
-              },
-              decoration: const NeoPopTiltedButtonDecoration(
-                color: accentColor,
-                plunkColor: accentColor,
-                shadowColor: Color.fromRGBO(36, 36, 36, 1),
-                showShimmer: true,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 70.0,
-                  vertical: 15,
+            Padding(
+              padding: const EdgeInsets.only(
+                  bottom: 10.0, left: 10, right: 10), // Optional padding
+              child: NeoPopTiltedButton(
+                isFloating: true,
+                onTapUp: () {
+                  HapticFeedback.vibrate();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            const ChatScreen(title: 'Serenity AI'),
+                      ));
+                },
+                decoration: const NeoPopTiltedButtonDecoration(
+                  color: accentColor,
+                  plunkColor: accentColor,
+                  shadowColor: Color.fromRGBO(36, 36, 36, 1),
+                  showShimmer: true,
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Try Demo  ',
-                      style: GoogleFonts.poppins(
-                        fontSize: 20,
-                        fontWeight: FontWeight
-                            .w500, // You can adjust the size as needed
-                        color: bgColor, // Change to your desired color
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 70.0,
+                    vertical: 15,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Try Demo  ',
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          fontWeight: FontWeight
+                              .w500, // You can adjust the size as needed
+                          color: bgColor, // Change to your desired color
+                        ),
                       ),
-                    ),
-                    const Icon(
-                      Icons.arrow_forward,
-                      color: bgColor,
-                    ),
-                  ],
+                      const Icon(
+                        Icons.arrow_forward,
+                        color: bgColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 10,
             ),
           ],
         ),

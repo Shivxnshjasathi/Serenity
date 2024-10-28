@@ -86,14 +86,15 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           color: Colors.white,
           child: Column(
             children: [
               Container(
                 height: 200,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.black,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -227,6 +228,7 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
+                    SizedBox(height: 40),
                   ],
                 ),
               ),

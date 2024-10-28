@@ -60,6 +60,7 @@ class _SWidgetState extends State<SWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -67,6 +68,7 @@ class _SWidgetState extends State<SWidget> {
             children: [
               Container(
                 height: 200,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.black,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -108,7 +110,7 @@ class _SWidgetState extends State<SWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     MarkdownBody(
-                      data: _shloka ?? 'Generating your first shloka...',
+                      data: _shloka ?? "",
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
                             color: Colors.black, fontWeight: FontWeight.w400
@@ -144,33 +146,45 @@ class _SWidgetState extends State<SWidget> {
                         code: GoogleFonts.poppins(color: Colors.black),
                       ),
                     ),
-                    const SizedBox(height: 40),
-                    NeoPopButton(
-                      color: Colors.black,
-                      bottomShadowColor: accentColor,
-                      depth: 5,
-                      onTapUp: () {
-                        _generateShloka();
-                        HapticFeedback.vibrate();
-                      },
-                      onTapDown: () => HapticFeedback.vibrate(),
-                      parentColor: accentColor,
-                      buttonPosition: Position.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Change Shloka",
-                                style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                )),
-                          ],
+                    SizedBox(
+                      height: 40,
+                    ),
+                    if (_loading)
+                      Center(
+                        child: Text('Generating your first shloka...',
+                            style: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            )),
+                      )
+                    else
+                      NeoPopButton(
+                        color: Colors.black,
+                        bottomShadowColor: accentColor,
+                        depth: 5,
+                        onTapUp: () {
+                          _generateShloka();
+                          HapticFeedback.vibrate();
+                        },
+                        onTapDown: () => HapticFeedback.vibrate(),
+                        parentColor: accentColor,
+                        buttonPosition: Position.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Change Shloka",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                  )),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
                     const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
