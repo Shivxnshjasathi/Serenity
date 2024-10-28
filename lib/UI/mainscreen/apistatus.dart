@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:serenity/constants/wedgets.dart';
-import 'package:url_launcher/link.dart';
 
 class ApiKeyWidget extends StatelessWidget {
   ApiKeyWidget({required this.onSubmitted, super.key});
@@ -24,17 +23,6 @@ class ApiKeyWidget extends StatelessWidget {
               style: primaryTextStyle,
             ),
             const SizedBox(height: 8),
-            Link(
-              uri: Uri.https('makersuite.google.com', '/app/apikey'),
-              target: LinkTarget.blank,
-              builder: (context, followLink) => TextButton(
-                onPressed: followLink,
-                child: Text(
-                  'Get an API Key',
-                  style: primaryTextStyle,
-                ),
-              ),
-            ),
             const SizedBox(height: 8),
             Row(
               children: [

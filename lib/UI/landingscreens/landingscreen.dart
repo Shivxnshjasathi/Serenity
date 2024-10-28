@@ -9,7 +9,6 @@ import 'package:serenity/UI/mainscreen/mainchatscreen.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:serenity/constants/navbar.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
