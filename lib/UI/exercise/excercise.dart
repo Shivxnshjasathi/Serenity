@@ -7,14 +7,14 @@ import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
 
-class storyWidget extends StatefulWidget {
-  const storyWidget({super.key});
+class RelaxationGuideWidget extends StatefulWidget {
+  const RelaxationGuideWidget({super.key});
 
   @override
-  State<storyWidget> createState() => _storyWidgetState();
+  State<RelaxationGuideWidget> createState() => _RelaxationGuideWidgetState();
 }
 
-class _storyWidgetState extends State<storyWidget> {
+class _RelaxationGuideWidgetState extends State<RelaxationGuideWidget> {
   static const String apiKey = 'AIzaSyAPHtUCHKOZ2YAOOlPETWaVFaBAoVKhs6U';
 
   late final GenerativeModel _model;
@@ -42,14 +42,14 @@ class _storyWidgetState extends State<storyWidget> {
     try {
       final response = await _chat.sendMessage(
         Content.text(
-          "Generate a random, wisdom-filled story from the *Bhagavad Gita* or an incident from the *Mahabharata* that teaches a valuable lesson. Include life lessons and spiritual insights that resonate with young people in metropolitan areas.",
+          "Generate a relaxation guide with exercises based on the *Bhagavad Gita* teachings that can help reduce stress and calm the mind. Include step-by-step instructions for each exercise, and explain how they promote tranquility and mindfulness.",
         ),
       );
       setState(() {
         _story = response.text;
       });
     } catch (e) {
-      _story = "Error generating story: ${e.toString()}";
+      _story = "Error generating relaxation guide: ${e.toString()}";
     } finally {
       setState(() {
         _loading = false;
@@ -78,7 +78,7 @@ class _storyWidgetState extends State<storyWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("Read a Story",
+                          Text("Relaxation Guide",
                               style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -86,7 +86,7 @@ class _storyWidgetState extends State<storyWidget> {
                               )),
                           const SizedBox(height: 10),
                           Text(
-                              "Read Short stories to rejuvenate the mind, increase productivity and focus,in today's busy world.",
+                              "Discover relaxation exercises inspired by the teachings of the *Bhagavad Gita* to calm your mind and reduce stress.",
                               style: GoogleFonts.libreBaskerville(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -113,42 +113,22 @@ class _storyWidgetState extends State<storyWidget> {
                       data: _story ?? '',
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
-                            color: Colors.black, fontWeight: FontWeight.w400
-                            // User text black, AI text white
-                            ),
-                        h1: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h2: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h3: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h4: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h5: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h6: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        blockquote: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        strong: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        em: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
+                            color: Colors.black, fontWeight: FontWeight.w400),
+                        h1: GoogleFonts.poppins(color: Colors.black),
+                        h2: GoogleFonts.poppins(color: Colors.black),
+                        h3: GoogleFonts.poppins(color: Colors.black),
+                        h4: GoogleFonts.poppins(color: Colors.black),
+                        h5: GoogleFonts.poppins(color: Colors.black),
+                        h6: GoogleFonts.poppins(color: Colors.black),
+                        blockquote: GoogleFonts.poppins(color: Colors.black),
+                        strong: GoogleFonts.poppins(color: Colors.black),
+                        em: GoogleFonts.poppins(color: Colors.black),
                         code: GoogleFonts.poppins(color: Colors.black),
                       ),
                     ),
                     const SizedBox(height: 40),
                     if (_loading)
-                      Text('Generating your Personalized Story...',
+                      Text('Generating your relaxation guide...',
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
@@ -172,7 +152,7 @@ class _storyWidgetState extends State<storyWidget> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Generate New Story",
+                              Text("Generate New Guide",
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 12,
@@ -184,7 +164,7 @@ class _storyWidgetState extends State<storyWidget> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Lottie.network(
-                        'https://lottie.host/1828d978-a67a-4457-9682-b3c9398fe05d/yK9qgpB2Cz.json',
+                        'https://lottie.host/1cfa5781-d91f-4b03-9044-74d5d400b157/MRSajGtsmy.json',
                         width: 350,
                         height: 350,
                         fit: BoxFit.contain,
@@ -200,23 +180,3 @@ class _storyWidgetState extends State<storyWidget> {
     );
   }
 }
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: Column(
-//         children: [
-//           Expanded(
-//             child:
-//                 MarkdownBody(data: _story ?? 'Generating your first story...'),
-//           ),
-//           if (_loading)
-//             const CircularProgressIndicator()
-//           else
-//             ElevatedButton(
-//               onPressed: _generateStory,
-//               child: const Text('Generate New Story'),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }

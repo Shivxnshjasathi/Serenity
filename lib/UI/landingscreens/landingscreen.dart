@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:neopop/widgets/buttons/neopop_tilted_button/neopop_tilted_button.dart';
 import 'package:serenity/UI/landingscreens/notifyme.dart';
+import 'package:serenity/UI/login/login.dart';
 import 'package:serenity/UI/mainscreen/mainchatscreen.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
 import 'package:serenity/constants/const.dart';
@@ -18,6 +20,19 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+            builder: (context) =>
+                Login()), // Navigate to SignInPage after sign-out
+      );
+    } catch (e) {
+      print('Error signing out: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +49,7 @@ class _LandingPageState extends State<LandingPage> {
                   child: Stack(
                     children: [
                       SizedBox(
-                        height: 450,
+                        height: 440,
                         child: CustomPaint(
                           painter: GridPainter(),
                           child: Container(),
@@ -48,8 +63,8 @@ class _LandingPageState extends State<LandingPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                SizedBox(
-                                  height: 90,
+                                const SizedBox(
+                                  height: 100,
                                 ),
                                 Row(
                                   children: [
@@ -57,13 +72,7 @@ class _LandingPageState extends State<LandingPage> {
                                       color: bgColor,
                                       buttonPosition: Position.center,
                                       onTapUp: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Notifty(),
-                                            ));
-
+                                        _signOut();
                                         HapticFeedback.vibrate();
                                       },
                                       onTapDown: () => HapticFeedback.vibrate(),
@@ -78,7 +87,7 @@ class _LandingPageState extends State<LandingPage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text("Notifty Me",
+                                            Text("Log Out",
                                                 style: GoogleFonts.poppins(
                                                   fontSize:
                                                       14, // You can adjust the size as needed
@@ -117,7 +126,7 @@ class _LandingPageState extends State<LandingPage> {
                                   color: Colors.white38,
                                 )),
                             const SizedBox(
-                              height: 45,
+                              height: 35,
                             ),
                             SizedBox(
                               width: 120,
@@ -266,7 +275,7 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
           ],

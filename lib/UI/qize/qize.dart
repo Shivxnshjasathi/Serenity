@@ -7,21 +7,21 @@ import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
 
-class storyWidget extends StatefulWidget {
-  const storyWidget({super.key});
+class CalmingMediaWidget extends StatefulWidget {
+  const CalmingMediaWidget({super.key});
 
   @override
-  State<storyWidget> createState() => _storyWidgetState();
+  State<CalmingMediaWidget> createState() => _CalmingMediaWidgetState();
 }
 
-class _storyWidgetState extends State<storyWidget> {
+class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
   static const String apiKey = 'AIzaSyAPHtUCHKOZ2YAOOlPETWaVFaBAoVKhs6U';
 
   late final GenerativeModel _model;
   late final ChatSession _chat;
   final ScrollController _scrollController = ScrollController();
   bool _loading = false;
-  String? _story;
+  String? _playlists;
 
   @override
   void initState() {
@@ -31,10 +31,10 @@ class _storyWidgetState extends State<storyWidget> {
       apiKey: apiKey,
     );
     _chat = _model.startChat();
-    _generateStory();
+    _generatePlaylists();
   }
 
-  Future<void> _generateStory() async {
+  Future<void> _generatePlaylists() async {
     setState(() {
       _loading = true;
     });
@@ -42,14 +42,14 @@ class _storyWidgetState extends State<storyWidget> {
     try {
       final response = await _chat.sendMessage(
         Content.text(
-          "Generate a random, wisdom-filled story from the *Bhagavad Gita* or an incident from the *Mahabharata* that teaches a valuable lesson. Include life lessons and spiritual insights that resonate with young people in metropolitan areas.",
+          "Generate a list of calming music playlists and links to relaxing videos suitable for meditation and relaxation. Include brief descriptions for each item.",
         ),
       );
       setState(() {
-        _story = response.text;
+        _playlists = response.text;
       });
     } catch (e) {
-      _story = "Error generating story: ${e.toString()}";
+      _playlists = "Error generating playlists: ${e.toString()}";
     } finally {
       setState(() {
         _loading = false;
@@ -78,7 +78,7 @@ class _storyWidgetState extends State<storyWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("Read a Story",
+                          Text("Explore Calming Media",
                               style: GoogleFonts.poppins(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500,
@@ -86,7 +86,7 @@ class _storyWidgetState extends State<storyWidget> {
                               )),
                           const SizedBox(height: 10),
                           Text(
-                              "Read Short stories to rejuvenate the mind, increase productivity and focus,in today's busy world.",
+                              "Discover playlists and videos to help you relax and meditate in today's busy world.",
                               style: GoogleFonts.libreBaskerville(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -110,12 +110,10 @@ class _storyWidgetState extends State<storyWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     MarkdownBody(
-                      data: _story ?? '',
+                      data: _playlists ?? '',
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
-                            color: Colors.black, fontWeight: FontWeight.w400
-                            // User text black, AI text white
-                            ),
+                            color: Colors.black, fontWeight: FontWeight.w400),
                         h1: GoogleFonts.poppins(
                           color: Colors.black,
                         ),
@@ -148,7 +146,7 @@ class _storyWidgetState extends State<storyWidget> {
                     ),
                     const SizedBox(height: 40),
                     if (_loading)
-                      Text('Generating your Personalized Story...',
+                      Text('Generating your calming playlists...',
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             fontWeight: FontWeight.w500,
@@ -160,7 +158,7 @@ class _storyWidgetState extends State<storyWidget> {
                         bottomShadowColor: accentColor,
                         depth: 5,
                         onTapUp: () {
-                          _generateStory();
+                          _generatePlaylists();
                           HapticFeedback.vibrate();
                         },
                         onTapDown: () => HapticFeedback.vibrate(),
@@ -172,7 +170,7 @@ class _storyWidgetState extends State<storyWidget> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Generate New Story",
+                              Text("Generate New Playlists",
                                   style: GoogleFonts.poppins(
                                     color: Colors.white,
                                     fontSize: 12,
@@ -184,7 +182,7 @@ class _storyWidgetState extends State<storyWidget> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Lottie.network(
-                        'https://lottie.host/1828d978-a67a-4457-9682-b3c9398fe05d/yK9qgpB2Cz.json',
+                        'https://lottie.host/e151dcab-6535-4b2d-8d53-44caf9cd388c/v7ZG4RQgcU.json',
                         width: 350,
                         height: 350,
                         fit: BoxFit.contain,
@@ -200,23 +198,3 @@ class _storyWidgetState extends State<storyWidget> {
     );
   }
 }
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: Column(
-//         children: [
-//           Expanded(
-//             child:
-//                 MarkdownBody(data: _story ?? 'Generating your first story...'),
-//           ),
-//           if (_loading)
-//             const CircularProgressIndicator()
-//           else
-//             ElevatedButton(
-//               onPressed: _generateStory,
-//               child: const Text('Generate New Story'),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }

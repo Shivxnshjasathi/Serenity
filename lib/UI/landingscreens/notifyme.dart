@@ -127,32 +127,32 @@ class _NotiftyState extends State<Notifty> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 50,
-                      width: 400,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black38, width: 1.5),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(13.0),
-                        child: Center(
-                          child: TextField(
-                            controller: _emailController,
-                            cursorColor: Colors.black,
-                            style: GoogleFonts.poppins(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                            decoration: InputDecoration(
-                              hintText: "Email",
-                              border: InputBorder.none,
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
+                    Center(
+                      child: TextField(
+                        controller: _emailController,
+                        cursorColor: Colors.white,
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          fillColor: Colors.black,
+                          suffixIcon:
+                              const Icon(Icons.email, color: Colors.black),
+                          labelText: 'Email',
+                          labelStyle: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.zero)),
+                          hintText: 'Type your Email here...',
+                          hintStyle: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
                           ),
                         ),
                       ),

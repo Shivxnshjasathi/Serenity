@@ -151,7 +151,7 @@ class _SWidgetState extends State<SWidget> {
                     ),
                     if (_loading)
                       Center(
-                        child: Text('Generating your first shloka...',
+                        child: Text('Generating your Personalized shloka...',
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
