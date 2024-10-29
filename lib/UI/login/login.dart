@@ -55,14 +55,15 @@ class _LoginState extends State<Login> {
       // Successful login, navigate to the landing screen
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+            backgroundColor: bgColor,
             content: Text(
-          'Login successful!',
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        )),
+              'Login successful!',
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            )),
       );
       Navigator.pushReplacement(
         context,
@@ -72,14 +73,15 @@ class _LoginState extends State<Login> {
       // Handle login errors
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+            backgroundColor: bgColor,
             content: Text(
-          'Error: ${e.message}',
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        )),
+              'Error: ${e.message}',
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            )),
       );
     } finally {
       setState(() {
@@ -104,27 +106,29 @@ class _LoginState extends State<Login> {
       // Successful sign up, show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+            backgroundColor: bgColor,
             content: Text(
-          'Sign-up successful! Please log in.',
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        )),
+              'Sign-up successful! Please log in.',
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            )),
       );
     } on FirebaseAuthException catch (e) {
       // Handle sign-up errors
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+            backgroundColor: bgColor,
             content: Text(
-          'Error: ${e.message}',
-          style: GoogleFonts.poppins(
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
-          ),
-        )),
+              'Error: ${e.message}',
+              style: GoogleFonts.poppins(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+            )),
       );
     } finally {
       setState(() {
@@ -346,7 +350,9 @@ class _LoginState extends State<Login> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (_isSigningUp)
-                              const CircularProgressIndicator()
+                              const CircularProgressIndicator(
+                                color: accentColor,
+                              )
                             else
                               Text("Sign Up",
                                   style: GoogleFonts.poppins(
