@@ -137,6 +137,8 @@ class _LoginState extends State<Login> {
     }
   }
 
+  bool _isObscured = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +152,7 @@ class _LoginState extends State<Login> {
               Column(
                 children: [
                   Container(
-                    height: 500,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     color: Colors.black,
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
@@ -161,9 +163,9 @@ class _LoginState extends State<Login> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
-                                child: Lottie.network(
+                                child: Lottie.asset(
                                   //'https://lottie.host/af564d77-ec53-4c7a-bc07-a6d46f718c0e/sXX4N5GafR.json',
-                                  'https://lottie.host/0f570bf4-a30a-4e32-a817-4d147a1cd568/zFNnKHvnwB.json',
+                                  'assets/login.json',
                                   width: 250,
                                   height: 250,
                                   fit: BoxFit.contain,
@@ -221,8 +223,7 @@ class _LoginState extends State<Login> {
                                 borderSide:
                                     BorderSide(width: 2, color: accentColor),
                               ),
-                              fillColor: Colors.white,
-                              suffixIcon:
+                              prefixIcon:
                                   const Icon(Icons.email, color: Colors.black),
                               labelText: 'Email',
                               labelStyle: GoogleFonts.poppins(
@@ -231,7 +232,9 @@ class _LoginState extends State<Login> {
                                 color: Colors.black,
                               ),
                               border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.zero),
+                                borderSide: BorderSide(
+                                    color:
+                                        Colors.black), // Default border color
                               ),
                               hintText: 'Type your Email here...',
                               hintStyle: GoogleFonts.poppins(
@@ -247,7 +250,7 @@ class _LoginState extends State<Login> {
                           child: TextField(
                             controller: _passwordController,
                             cursorColor: Colors.black,
-                            obscureText: true,
+                            obscureText: _isObscured, // Toggle this value
                             style: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -261,8 +264,22 @@ class _LoginState extends State<Login> {
                                 borderSide:
                                     BorderSide(width: 2, color: accentColor),
                               ),
-                              suffixIcon:
+                              prefixIcon:
                                   const Icon(Icons.lock, color: Colors.black),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _isObscured
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.black,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _isObscured =
+                                        !_isObscured; // Toggle visibility state
+                                  });
+                                },
+                              ),
                               labelText: 'Password',
                               labelStyle: GoogleFonts.poppins(
                                 fontSize: 12,
@@ -281,20 +298,21 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text("Made with ❤️ by Shivansh",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  )),
-                            ),
-                          ],
-                        ),
+
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: [
+                        //     Padding(
+                        //       padding: const EdgeInsets.all(10.0),
+                        //       child: Text("Made with ❤️ by Shivansh",
+                        //           style: GoogleFonts.poppins(
+                        //             fontSize: 12,
+                        //             fontWeight: FontWeight.w500,
+                        //             color: Colors.black,
+                        //           )),
+                        //     ),
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),
@@ -333,7 +351,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
                     NeoPopButton(
                       color: Colors.black,
                       onTapUp: () {

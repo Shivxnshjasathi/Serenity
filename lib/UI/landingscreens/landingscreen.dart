@@ -204,8 +204,8 @@ class _LandingPageState extends State<LandingPage> {
                             Padding(
                               padding: const EdgeInsets.all(
                                   8.0), // Optional padding for better layout
-                              child: Lottie.network(
-                                'https://lottie.host/5701d836-3809-491f-ac3e-caf440d0025a/6vvCMnbls8.json',
+                              child: Lottie.asset(
+                                'assets/landing.json',
                                 width: 200,
                                 height: 200,
                                 fit: BoxFit.contain,

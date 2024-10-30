@@ -136,8 +136,8 @@ class _PomodoroScreenState extends State<PomodoroScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Lottie.network(
-                        'https://lottie.host/124dc20f-ada2-484d-9325-2898683bb538/SU9X0iPdqb.json',
+                      child: Lottie.asset(
+                        'assets/timer.json',
                         width: 300,
                         height: 250,
                         fit: BoxFit.contain,

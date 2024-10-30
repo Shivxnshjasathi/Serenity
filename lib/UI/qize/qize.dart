@@ -181,8 +181,8 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
                       ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Lottie.network(
-                        'https://lottie.host/e151dcab-6535-4b2d-8d53-44caf9cd388c/v7ZG4RQgcU.json',
+                      child: Lottie.asset(
+                        'assets/music.json',
                         width: 350,
                         height: 350,
                         fit: BoxFit.contain,

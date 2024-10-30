@@ -183,8 +183,8 @@ class _storyWidgetState extends State<storyWidget> {
                       ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Lottie.network(
-                        'https://lottie.host/1828d978-a67a-4457-9682-b3c9398fe05d/yK9qgpB2Cz.json',
+                      child: Lottie.asset(
+                        'assets/story.json',
                         width: 350,
                         height: 350,
                         fit: BoxFit.contain,

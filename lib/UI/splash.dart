@@ -87,8 +87,8 @@ class _SplashScreenState extends State<SplashScreen>
               Padding(
                 padding: const EdgeInsets.all(
                     8.0), // Optional padding for better layout
-                child: Lottie.network(
-                  'https://lottie.host/ac1ba678-0208-4cea-8ee0-b1a2f14aa6c0/QrWskiOzHl.json',
+                child: Lottie.asset(
+                  'assets/welcome-asset.json',
                   width: 500,
                   height: 600,
                   fit: BoxFit.contain,

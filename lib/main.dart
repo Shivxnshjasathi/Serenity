@@ -15,15 +15,29 @@ class GenerativeAISample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Serenity AI',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            brightness: Brightness.dark,
-            seedColor: const Color.fromARGB(255, 171, 222, 244),
-          ),
-          useMaterial3: true,
+      debugShowCheckedModeBanner: false,
+      title: 'Serenity AI',
+      theme: ThemeData(
+        colorScheme: const ColorScheme.dark(
+          primary: Colors.black,
+          onPrimary: Colors.white,
+          background: Colors.black,
+          surface: Colors.black,
+          onSurface: Colors.white,
+          secondary: Colors.black,
+          onSecondary: Colors.white,
+          error: Colors.red,
+          onError: Colors.white,
         ),
-        home: const SplashScreen());
+        scaffoldBackgroundColor:
+            Colors.black, // Sets the main background color to black
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white, // Text color in the AppBar
+        ),
+        useMaterial3: true,
+      ),
+      home: const SplashScreen(),
+    );
   }
 }

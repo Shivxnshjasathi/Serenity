@@ -163,8 +163,8 @@ class _RelaxationGuideWidgetState extends State<RelaxationGuideWidget> {
                       ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Lottie.network(
-                        'https://lottie.host/927d861e-19e0-481a-8ff8-8c958efc2bf4/yLXPKLWOGd.json',
+                      child: Lottie.asset(
+                        'assets/excercise.json',
                         width: 350,
                         height: 350,
                         fit: BoxFit.contain,

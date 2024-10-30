@@ -188,8 +188,8 @@ class _SWidgetState extends State<SWidget> {
                     const SizedBox(height: 40),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Lottie.network(
-                        'https://lottie.host/29c39914-44d2-42be-860d-8db2b692c716/g8vFEyMsPW.json',
+                      child: Lottie.asset(
+                        'assets/shloke.json',
                         width: 350,
                         height: 350,
                         fit: BoxFit.contain,
