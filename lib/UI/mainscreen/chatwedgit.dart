@@ -86,12 +86,37 @@ class _ChatWidgetState extends State<ChatWidget> {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: _textController,
+                    cursorColor: Colors.black,
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                    decoration: InputDecoration(
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(0)),
+                        borderSide: BorderSide(width: 2, color: Colors.white),
+                      ),
+                      labelText: 'Share your thoughts...',
+                      labelStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(0)),
+                        // Default border color
+                      ),
+                      hintText: 'Type here...',
+                      hintStyle: GoogleFonts.poppins(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white30,
+                      ),
+                    ),
                     autofocus: true,
                     focusNode: _textFieldFocus,
-                    decoration:
-                        textFieldDecoration(context, 'Share your thoughts...'),
-                    controller: _textController,
-                    style: primaryTextStyle,
                     onSubmitted: (String value) {
                       _sendChatMessage(value);
                     },
