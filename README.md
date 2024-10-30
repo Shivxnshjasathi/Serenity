@@ -17,7 +17,7 @@ To get started with SerenityAI, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Serenity.git
+   [git clone https://github.com/yourusername/Serenity.git](https://github.com/Shivxnshjasathi/Serenity)
    cd SerenityAI
    ```
 
