@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +22,7 @@ class _LoginState extends State<Login> {
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoggingIn = false;
   bool _isSigningUp = false;
+  bool _isObscured = true;
 
   @override
   void initState() {
@@ -55,33 +57,34 @@ class _LoginState extends State<Login> {
       // Successful login, navigate to the landing screen
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            backgroundColor: bgColor,
-            content: Text(
-              'Login successful!',
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            )),
+          backgroundColor: bgColor,
+          content: Text(
+            'Login successful!',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
       );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LandingPage()),
       );
     } on FirebaseAuthException catch (e) {
-      // Handle login errors
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            backgroundColor: bgColor,
-            content: Text(
-              'Error: ${e.message}',
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            )),
+          backgroundColor: bgColor,
+          content: Text(
+            'Error: ${e.message}',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
       );
     } finally {
       setState(() {
@@ -103,32 +106,32 @@ class _LoginState extends State<Login> {
         email: email,
         password: password,
       );
-      // Successful sign up, show success message
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            backgroundColor: bgColor,
-            content: Text(
-              'Sign-up successful! Please log in.',
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            )),
+          backgroundColor: bgColor,
+          content: Text(
+            'Sign-up successful! Please log in.',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
       );
     } on FirebaseAuthException catch (e) {
-      // Handle sign-up errors
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            backgroundColor: bgColor,
-            content: Text(
-              'Error: ${e.message}',
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            )),
+          backgroundColor: bgColor,
+          content: Text(
+            'Error: ${e.message}',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
       );
     } finally {
       setState(() {
@@ -137,7 +140,57 @@ class _LoginState extends State<Login> {
     }
   }
 
-  bool _isObscured = true;
+  Future<void> _resetPassword() async {
+    final String email = _emailController.text.trim();
+
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: bgColor,
+          content: Text(
+            'Please enter your email to reset password.',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: bgColor,
+          content: Text(
+            'Password reset email sent!',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: bgColor,
+          content: Text(
+            'Error: ${e.message}',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +217,6 @@ class _LoginState extends State<Login> {
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: Lottie.asset(
-                                  //'https://lottie.host/af564d77-ec53-4c7a-bc07-a6d46f718c0e/sXX4N5GafR.json',
                                   'assets/login.json',
                                   width: 250,
                                   height: 250,
@@ -185,12 +237,13 @@ class _LoginState extends State<Login> {
                                   )),
                               const SizedBox(height: 10),
                               Text(
-                                  "Log in to your account \nor create a new one",
-                                  style: GoogleFonts.libreBaskerville(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.white,
-                                  )),
+                                "Log in to your account \nor create a new one",
+                                style: GoogleFonts.libreBaskerville(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -204,115 +257,100 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: TextField(
-                            controller: _emailController,
-                            cursorColor: Colors.black,
-                            style: GoogleFonts.poppins(
+                        TextField(
+                          controller: _emailController,
+                          cursorColor: Colors.black,
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 2, color: accentColor),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(0)),
+                            ),
+                            prefixIcon:
+                                const Icon(Icons.email, color: Colors.black),
+                            labelText: 'Email',
+                            labelStyle: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
-                            decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
-                                borderSide:
-                                    BorderSide(width: 2, color: accentColor),
-                              ),
-                              prefixIcon:
-                                  const Icon(Icons.email, color: Colors.black),
-                              labelText: 'Email',
-                              labelStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                              border: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color:
-                                        Colors.black), // Default border color
-                              ),
-                              hintText: 'Type your Email here...',
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
+                            hintText: 'Type your Email here...',
+                            hintStyle: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Center(
-                          child: TextField(
-                            controller: _passwordController,
-                            cursorColor: Colors.black,
-                            obscureText: _isObscured, // Toggle this value
-                            style: GoogleFonts.poppins(
+                        TextField(
+                          controller: _passwordController,
+                          cursorColor: Colors.black,
+                          obscureText: _isObscured,
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(width: 2, color: accentColor),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(0)),
+                            ),
+                            prefixIcon:
+                                const Icon(Icons.lock, color: Colors.black),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isObscured
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscured = !_isObscured;
+                                });
+                              },
+                            ),
+                            labelText: 'Password',
+                            labelStyle: GoogleFonts.poppins(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                               color: Colors.black,
                             ),
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(0)),
-                                borderSide:
-                                    BorderSide(width: 2, color: accentColor),
-                              ),
-                              prefixIcon:
-                                  const Icon(Icons.lock, color: Colors.black),
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _isObscured
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
-                                  color: Colors.black,
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isObscured =
-                                        !_isObscured; // Toggle visibility state
-                                  });
-                                },
-                              ),
-                              labelText: 'Password',
-                              labelStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.zero),
-                              ),
-                              hintText: 'Type your Password here...',
-                              hintStyle: GoogleFonts.poppins(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
+                            hintText: 'Type your Password here...',
+                            hintStyle: GoogleFonts.poppins(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
                             ),
                           ),
                         ),
-
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   children: [
-                        //     Padding(
-                        //       padding: const EdgeInsets.all(10.0),
-                        //       child: Text("Made with ❤️ by Shivansh",
-                        //           style: GoogleFonts.poppins(
-                        //             fontSize: 12,
-                        //             fontWeight: FontWeight.w500,
-                        //             color: Colors.black,
-                        //           )),
-                        //     ),
-                        //   ],
-                        // ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            const Icon(Icons.info, color: Colors.black),
+                            TextButton(
+                              onPressed: _resetPassword,
+                              child: Text("Forgot Password?",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                  )),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),

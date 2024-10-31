@@ -29,13 +29,27 @@ class GenerativeAISample extends StatelessWidget {
           error: Colors.red,
           onError: Colors.white,
         ),
-        scaffoldBackgroundColor:
-            Colors.black, // Sets the main background color to black
+        scaffoldBackgroundColor: Colors.black,
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
-          foregroundColor: Colors.white, // Text color in the AppBar
+          foregroundColor: Colors.white,
         ),
         useMaterial3: true,
+        inputDecorationTheme: const InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black, width: 1.5),
+            borderRadius: BorderRadius.all(Radius.circular(0)),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.all(Radius.circular(0)),
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.all(Radius.circular(0)),
+          ),
+          labelStyle: TextStyle(color: Colors.white),
+        ),
       ),
       home: const SplashScreen(),
     );
