@@ -4,8 +4,9 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class MessageWidget extends StatelessWidget {
+class MessageWidget extends StatefulWidget {
   const MessageWidget({
     super.key,
     required this.text,
@@ -16,10 +17,29 @@ class MessageWidget extends StatelessWidget {
   final bool isFromUser;
 
   @override
+  State<MessageWidget> createState() => _MessageWidgetState();
+}
+
+class _MessageWidgetState extends State<MessageWidget> {
+  late FlutterTts _flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    _flutterTts = FlutterTts();
+  }
+
+  Future<void> _speak(String text) async {
+    await _flutterTts.setLanguage("en-US"); // Set the language
+    await _flutterTts.setPitch(1.0); // Set the pitch
+    await _flutterTts.speak(text); // Speak the text
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment:
-          isFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+          widget.isFromUser ? MainAxisAlignment.end : MainAxisAlignment.start,
       children: [
         Flexible(
           child: Padding(
@@ -27,53 +47,64 @@ class MessageWidget extends StatelessWidget {
             child: Column(
               children: [
                 NeoPopButton(
-                  color: isFromUser ? accentColor : bgColor,
+                  color: widget.isFromUser ? accentColor : bgColor,
                   shadowColor: accentColor,
                   depth: 5,
                   onTapUp: () {
                     HapticFeedback.vibrate();
+                    _speak(widget.text); // Speak the message text
                   },
                   onTapDown: () => HapticFeedback.vibrate(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
                     child: MarkdownBody(
-                      data: text,
+                      data: widget.text,
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
-                          color: isFromUser
+                          color: widget.isFromUser
                               ? Colors.black
                               : Colors.white, // User text black, AI text white
                         ),
                         h1: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         h2: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         h3: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         h4: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         h5: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         h6: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         blockquote: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         strong: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         em: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                         code: GoogleFonts.poppins(
-                          color: isFromUser ? Colors.black : Colors.white,
+                          color:
+                              widget.isFromUser ? Colors.black : Colors.white,
                         ),
                       ),
                     ),

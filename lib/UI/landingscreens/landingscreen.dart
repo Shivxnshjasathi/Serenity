@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:neopop/widgets/buttons/neopop_tilted_button/neopop_tilted_button.dart';
-import 'package:serenity/UI/landingscreens/notifyme.dart';
 import 'package:serenity/UI/login/login.dart';
 import 'package:serenity/UI/mainscreen/mainchatscreen.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
@@ -160,7 +159,7 @@ class _LandingPageState extends State<LandingPage> {
                               height: 30,
                             ),
                             Text(
-                                "Get notified when Serenity is available for you.",
+                                "Click on Explore to start your journey to inner peace!",
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -258,7 +257,7 @@ class _LandingPageState extends State<LandingPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Try Demo  ',
+                        'Start Chatting  ',
                         style: GoogleFonts.poppins(
                           fontSize: 20,
                           fontWeight: FontWeight
