@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:serenity/UI/exercise/excercise.dart';
 import 'package:serenity/UI/qize/qize.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
@@ -23,7 +25,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
     const CalmingMediaWidget(),
   ];
 
-  // Function to handle item taps in BottomNavigationBar
+  // Function to handle item taps in GNav
   void _onItemTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -46,40 +48,51 @@ class _NavBarScreenState extends State<NavBarScreen> {
         ),
       ),
       body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.black,
-        unselectedItemColor: Colors.white,
-        selectedFontSize: 10,
-        showSelectedLabels: false,
-        selectedItemColor: accentColor,
-        enableFeedback: true,
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _currentIndex,
-        onTap: _onItemTapped,
-        selectedLabelStyle: GoogleFonts.poppins(),
-        showUnselectedLabels: false,
-        items: const [
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/open-book1.png")),
-            label: 'Shloka',
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: GNav(
+            textStyle: GoogleFonts.poppins(
+              color: accentColor,
+              fontSize: 12, // Increase font size if desired
+              fontWeight: FontWeight.w500,
+            ),
+            haptic: true,
+            curve: Curves.decelerate,
+            gap: 8,
+            color: Colors.white,
+            activeColor: accentColor,
+            iconSize: 28, // Increase icon size for a larger appearance
+            //tabBackgroundColor: accentColor,
+            padding: const EdgeInsets.symmetric(
+                horizontal: 20, vertical: 8), // Increase vertical padding
+            selectedIndex: _currentIndex,
+            onTabChange: _onItemTapped,
+            tabs: const [
+              GButton(
+                icon: LineIcons.book,
+                text: 'Shloka',
+              ),
+              GButton(
+                icon: LineIcons.stopwatch,
+                text: 'Timer',
+              ),
+              GButton(
+                icon: LineIcons.bookOpen,
+                text: 'Story',
+              ),
+              GButton(
+                icon: LineIcons.running,
+                text: 'Exercise',
+              ),
+              GButton(
+                icon: LineIcons.questionCircle,
+                text: 'Quiz',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/yoga.png")),
-            label: 'Timer',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/reading-book.png")),
-            label: 'Story',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/yoga1.png")),
-            label: 'Exercise',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage("assets/ideas.png")),
-            label: 'Quiz',
-          ),
-        ],
+        ),
       ),
     );
   }
