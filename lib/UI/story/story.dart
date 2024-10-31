@@ -6,22 +6,25 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
-class storyWidget extends StatefulWidget {
-  const storyWidget({super.key});
+class StoryWidget extends StatefulWidget {
+  const StoryWidget({super.key});
 
   @override
-  State<storyWidget> createState() => _storyWidgetState();
+  State<StoryWidget> createState() => _StoryWidgetState();
 }
 
-class _storyWidgetState extends State<storyWidget> {
+class _StoryWidgetState extends State<StoryWidget> {
   static const String apiKey = 'AIzaSyAPHtUCHKOZ2YAOOlPETWaVFaBAoVKhs6U';
 
   late final GenerativeModel _model;
   late final ChatSession _chat;
+  late final FlutterTts _flutterTts;
   final ScrollController _scrollController = ScrollController();
   bool _loading = false;
   String? _story;
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -31,7 +34,29 @@ class _storyWidgetState extends State<storyWidget> {
       apiKey: apiKey,
     );
     _chat = _model.startChat();
+    _flutterTts = FlutterTts();
+    _initializeTts();
     _generateStory();
+  }
+
+  void _initializeTts() {
+    _flutterTts.setCompletionHandler(() {
+      setState(() {
+        _isPlaying = false;
+      });
+    });
+
+    _flutterTts.setPauseHandler(() {
+      setState(() {
+        _isPlaying = false;
+      });
+    });
+
+    _flutterTts.setContinueHandler(() {
+      setState(() {
+        _isPlaying = true;
+      });
+    });
   }
 
   Future<void> _generateStory() async {
@@ -57,10 +82,39 @@ class _storyWidgetState extends State<storyWidget> {
     }
   }
 
+  Future<void> _togglePlayPause() async {
+    if (_isPlaying) {
+      await _flutterTts.pause();
+    } else {
+      if (_story != null && _story!.isNotEmpty) {
+        await _flutterTts.setLanguage("en-IN");
+        await _flutterTts.setPitch(1.0);
+        await _flutterTts.speak(_story!);
+      }
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: _togglePlayPause,
+        backgroundColor: Colors.black,
+        child: Icon(
+          _isPlaying ? Icons.pause : Icons.play_arrow,
+          color: Colors.white,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -86,7 +140,7 @@ class _storyWidgetState extends State<storyWidget> {
                               )),
                           const SizedBox(height: 10),
                           Text(
-                              "Read Short stories to rejuvenate the mind, increase productivity and focus,in today's busy world.",
+                              "Read Short stories to rejuvenate the mind, increase productivity and focus, in today's busy world.",
                               style: GoogleFonts.libreBaskerville(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
@@ -113,9 +167,7 @@ class _storyWidgetState extends State<storyWidget> {
                       data: _story ?? '',
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
-                            color: Colors.black, fontWeight: FontWeight.w400
-                            // User text black, AI text white
-                            ),
+                            color: Colors.black, fontWeight: FontWeight.w400),
                         h1: GoogleFonts.poppins(
                           color: Colors.black,
                         ),
@@ -200,23 +252,3 @@ class _storyWidgetState extends State<storyWidget> {
     );
   }
 }
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: Column(
-//         children: [
-//           Expanded(
-//             child:
-//                 MarkdownBody(data: _story ?? 'Generating your first story...'),
-//           ),
-//           if (_loading)
-//             const CircularProgressIndicator()
-//           else
-//             ElevatedButton(
-//               onPressed: _generateStory,
-//               child: const Text('Generate New Story'),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }

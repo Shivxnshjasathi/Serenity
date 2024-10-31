@@ -6,6 +6,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class SWidget extends StatefulWidget {
   const SWidget({super.key});
@@ -19,9 +20,11 @@ class _SWidgetState extends State<SWidget> {
 
   late final GenerativeModel _model;
   late final ChatSession _chat;
+  late final FlutterTts _flutterTts;
   final ScrollController _scrollController = ScrollController();
   bool _loading = false;
   String? _shloka;
+  bool _isPlaying = false;
 
   @override
   void initState() {
@@ -31,7 +34,29 @@ class _SWidgetState extends State<SWidget> {
       apiKey: apiKey,
     );
     _chat = _model.startChat();
+    _flutterTts = FlutterTts();
+    _initializeTts();
     _generateShloka();
+  }
+
+  void _initializeTts() {
+    _flutterTts.setCompletionHandler(() {
+      setState(() {
+        _isPlaying = false;
+      });
+    });
+
+    _flutterTts.setPauseHandler(() {
+      setState(() {
+        _isPlaying = false;
+      });
+    });
+
+    _flutterTts.setContinueHandler(() {
+      setState(() {
+        _isPlaying = true;
+      });
+    });
   }
 
   Future<void> _generateShloka() async {
@@ -57,10 +82,39 @@ class _SWidgetState extends State<SWidget> {
     }
   }
 
+  Future<void> _togglePlayPause() async {
+    if (_isPlaying) {
+      await _flutterTts.pause();
+    } else {
+      if (_shloka != null && _shloka!.isNotEmpty) {
+        await _flutterTts.setLanguage("en-IN");
+        await _flutterTts.setPitch(1.0);
+        await _flutterTts.speak(_shloka!);
+      }
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: _togglePlayPause,
+        backgroundColor: Colors.black,
+        child: Icon(
+          _isPlaying ? Icons.pause : Icons.play_arrow,
+          color: Colors.white,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -113,42 +167,22 @@ class _SWidgetState extends State<SWidget> {
                       data: _shloka ?? "",
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
-                            color: Colors.black, fontWeight: FontWeight.w400
-                            // User text black, AI text white
-                            ),
-                        h1: GoogleFonts.poppins(
                           color: Colors.black,
+                          fontWeight: FontWeight.w400,
                         ),
-                        h2: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h3: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h4: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h5: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h6: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        blockquote: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        strong: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        em: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
+                        h1: GoogleFonts.poppins(color: Colors.black),
+                        h2: GoogleFonts.poppins(color: Colors.black),
+                        h3: GoogleFonts.poppins(color: Colors.black),
+                        h4: GoogleFonts.poppins(color: Colors.black),
+                        h5: GoogleFonts.poppins(color: Colors.black),
+                        h6: GoogleFonts.poppins(color: Colors.black),
+                        blockquote: GoogleFonts.poppins(color: Colors.black),
+                        strong: GoogleFonts.poppins(color: Colors.black),
+                        em: GoogleFonts.poppins(color: Colors.black),
                         code: GoogleFonts.poppins(color: Colors.black),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
+                    const SizedBox(height: 20),
                     if (_loading)
                       Center(
                         child: Text('Generating your Personalized shloka...',

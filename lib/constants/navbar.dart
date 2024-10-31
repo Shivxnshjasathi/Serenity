@@ -18,7 +18,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
   final List<Widget> _pages = [
     const SWidget(),
     PomodoroScreen(),
-    const storyWidget(),
+    const StoryWidget(),
     const RelaxationGuideWidget(),
     const CalmingMediaWidget(),
   ];

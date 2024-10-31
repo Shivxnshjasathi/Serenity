@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:lottie/lottie.dart';
@@ -19,6 +20,8 @@ class _RelaxationGuideWidgetState extends State<RelaxationGuideWidget> {
 
   late final GenerativeModel _model;
   late final ChatSession _chat;
+  final FlutterTts _flutterTts = FlutterTts();
+  bool _isPlaying = false;
   final ScrollController _scrollController = ScrollController();
   bool _loading = false;
   String? _story;
@@ -57,10 +60,38 @@ class _RelaxationGuideWidgetState extends State<RelaxationGuideWidget> {
     }
   }
 
+  Future<void> _togglePlayPause() async {
+    if (_story != null) {
+      if (_isPlaying) {
+        await _flutterTts.stop();
+      } else {
+        await _flutterTts.speak(_story!);
+      }
+      setState(() {
+        _isPlaying = !_isPlaying;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _flutterTts.stop();
+    // _flutterTts.dispose(); // No dispose method available for FlutterTts
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: _togglePlayPause,
+        backgroundColor: Colors.black,
+        child: Icon(
+          _isPlaying ? Icons.pause : Icons.play_arrow,
+          color: Colors.white,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
@@ -86,7 +117,7 @@ class _RelaxationGuideWidgetState extends State<RelaxationGuideWidget> {
                               )),
                           const SizedBox(height: 10),
                           Text(
-                              "Discover relaxation exercises inspired by the teachings of the *Bhagavad Gita* to calm your mind and reduce stress.",
+                              "Discover relaxation exercises inspired by the teachings of the Bhagavad Gita to calm your mind and reduce stress.",
                               style: GoogleFonts.libreBaskerville(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w400,
