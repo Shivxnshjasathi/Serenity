@@ -67,47 +67,58 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: Colors.black, // Netflix-like black background
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 50),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text("SerenityAI",
-                      style: GoogleFonts.poppins(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white38,
-                      )),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(
-                    8.0), // Optional padding for better layout
-                child: Lottie.asset(
-                  'assets/welcome-asset.json',
-                  width: 500,
-                  height: 600,
-                  fit: BoxFit.contain,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text("SerenityAI",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white38,
+                        )),
+                  ],
                 ),
-              ),
-              Text("Welcome To The Club",
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white38,
-                  )),
-              const SizedBox(height: 10),
-              Text("Your Personal Mental,\nHealth Assistant",
-                  style: GoogleFonts.libreBaskerville(
-                    fontSize: 18, // You can adjust the size as needed
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white, // Change to your desired color
-                  )),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(
+                      8.0), // Optional padding for better layout
+                  child: Lottie.asset(
+                    'assets/welcome-asset.json',
+                    width: 500,
+                    height: 600,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Greetings and Welcome !",
+                        style: GoogleFonts.poppins(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white38,
+                        )),
+                    const SizedBox(height: 10),
+                    Text("Your Personal Mental,\nHealth Assistant",
+                        style: GoogleFonts.libreBaskerville(
+                          fontSize: 18, // You can adjust the size as needed
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white, // Change to your desired color
+                        )),
+                  ],
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
       ),

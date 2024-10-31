@@ -22,6 +22,7 @@ class MessageWidget extends StatefulWidget {
 
 class _MessageWidgetState extends State<MessageWidget> {
   late FlutterTts _flutterTts;
+  bool _isSpeaking = false; // Variable to track if speech is ongoing
 
   @override
   void initState() {
@@ -30,9 +31,17 @@ class _MessageWidgetState extends State<MessageWidget> {
   }
 
   Future<void> _speak(String text) async {
-    await _flutterTts.setLanguage("en-US"); // Set the language
-    await _flutterTts.setPitch(1.0); // Set the pitch
-    await _flutterTts.speak(text); // Speak the text
+    if (_isSpeaking) {
+      // If already speaking, pause
+      await _flutterTts.pause();
+      _isSpeaking = false; // Update state
+    } else {
+      // If not speaking, start speaking
+      await _flutterTts.setLanguage("en-US"); // Set the language
+      await _flutterTts.setPitch(1.0); // Set the pitch
+      await _flutterTts.speak(text); // Speak the text
+      _isSpeaking = true; // Update state
+    }
   }
 
   @override
@@ -52,7 +61,8 @@ class _MessageWidgetState extends State<MessageWidget> {
                   depth: 5,
                   onTapUp: () {
                     HapticFeedback.vibrate();
-                    _speak(widget.text); // Speak the message text
+                    _speak(
+                        widget.text); // Speak the message text or pause/resume
                   },
                   onTapDown: () => HapticFeedback.vibrate(),
                   child: Padding(

@@ -178,9 +178,9 @@ class _LandingPageState extends State<LandingPage> {
                     children: [
                       Text("Ready to Prioritize Your Mental Health?",
                           style: GoogleFonts.libreBaskerville(
-                            fontSize: 16, // You can adjust the size as needed
+                            fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: Colors.white, // Change to your desired color
+                            color: Colors.white,
                           )),
                       const SizedBox(
                         height: 10,
@@ -216,21 +216,25 @@ class _LandingPageState extends State<LandingPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                          " Hello! I'm your companion. How can I support you today ?",
-                          style: GoogleFonts.poppins(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white38,
-                          )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                              " Hello! I'm your companion. Click on Start Chatting?",
+                              style: GoogleFonts.poppins(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white38,
+                              )),
+                        ],
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 10.0, left: 10, right: 10), // Optional padding
+              padding: const EdgeInsets.only(bottom: 10.0, left: 10, right: 10),
               child: NeoPopTiltedButton(
                 isFloating: true,
                 onTapUp: () {
