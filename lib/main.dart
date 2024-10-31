@@ -37,7 +37,7 @@ class GenerativeAISample extends StatelessWidget {
         useMaterial3: true,
         inputDecorationTheme: const InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 1.5),
+            borderSide: BorderSide(color: Colors.transparent, width: 1.5),
             borderRadius: BorderRadius.all(Radius.circular(0)),
           ),
           focusedBorder: OutlineInputBorder(
