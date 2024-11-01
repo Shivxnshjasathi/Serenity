@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:lottie/lottie.dart';
 import 'package:serenity/constants/const.dart';
 
 class ContentScreen extends StatelessWidget {
@@ -74,6 +75,31 @@ class ContentScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         final shlokas = snapshot.data!.docs;
+        if (shlokas.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Lottie.asset(
+                    'assets/bookmark.json',
+                    width: 350,
+                    height: 350,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Text(
+                  'No bookmarks in Shlokas section',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
         return ListView.builder(
           padding: const EdgeInsets.all(16.0),
           itemCount: shlokas.length,
@@ -126,6 +152,31 @@ class ContentScreen extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         final items = snapshot.data!.docs;
+        if (items.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Lottie.asset(
+                    'assets/bookmark.json',
+                    width: 350,
+                    height: 350,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Text(
+                  'No bookmarks in this section',
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
         return ListView.builder(
           padding: const EdgeInsets.all(16.0),
           itemCount: items.length,

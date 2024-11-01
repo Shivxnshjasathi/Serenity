@@ -261,17 +261,32 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
                         parentColor: accentColor,
                         buttonPosition: Position.bottomCenter,
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Text(
-                            "Generate Shloka",
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Generate Shloka",
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 40),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Lottie.asset(
+                        'assets/music.json',
+                        width: 350,
+                        height: 350,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ],
                 ),
               ),

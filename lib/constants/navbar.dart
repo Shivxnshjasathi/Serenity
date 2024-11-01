@@ -5,6 +5,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:serenity/UI/bookmark/bookmarkscreen.dart';
 import 'package:serenity/UI/exercise/excercise.dart';
+import 'package:serenity/UI/profile/profile.dart';
 import 'package:serenity/UI/qize/qize.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
 import 'package:serenity/UI/story/story.dart';
@@ -187,18 +188,6 @@ class ExploreScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Explore")),
       body: const Center(child: Text("Explore Screen")),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Profile")),
-      body: const Center(child: Text("Profile Screen")),
     );
   }
 }
