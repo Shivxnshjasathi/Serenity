@@ -1,3 +1,5 @@
+import 'package:animated_floating_button_pro/floating_action_button.dart';
+import 'package:animated_floating_button_pro/floating_button_props.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -7,6 +9,8 @@ import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StoryWidget extends StatefulWidget {
   const StoryWidget({super.key});
@@ -97,6 +101,51 @@ class _StoryWidgetState extends State<StoryWidget> {
     });
   }
 
+  Future<void> _bookmarkStory() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        throw Exception('User not authenticated');
+      }
+      final userId = user.uid;
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('storyBookmarks')
+          .add({
+        'content': _story,
+        'tag': 'story',
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      // await FirebaseFirestore.instance
+      //     .collection('bookmarks')
+      //     .doc(userId)
+      //     .collection('userBookmarks')
+      //     .add({'tag': 'story', 'content': _story});
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+              'Story bookmarked successfully!',
+              style: GoogleFonts.poppins(color: Colors.white),
+            ),
+            backgroundColor: bgColor),
+      );
+    } catch (e) {
+      print('Failed to bookmark story: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(
+              'Failed to bookmark story.',
+              style: GoogleFonts.poppins(color: Colors.white),
+            ),
+            backgroundColor: bgColor),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _flutterTts.stop();
@@ -107,13 +156,24 @@ class _StoryWidgetState extends State<StoryWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: _togglePlayPause,
-        backgroundColor: Colors.black,
-        child: Icon(
-          _isPlaying ? Icons.pause : Icons.play_arrow,
-          color: Colors.white,
-        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: AnimatedFloatingButton(
+        shadowColor: Colors.transparent,
+        padding: const EdgeInsets.all(16),
+        openIcon: const Icon(Icons.more_horiz),
+        childrenProps: [
+          FloatingButtonProps(
+            icon: _isPlaying ? Icons.pause : Icons.play_arrow,
+            action: _togglePlayPause,
+          ),
+          FloatingButtonProps(
+            icon: Icons.bookmark,
+            action: () {
+              HapticFeedback.vibrate();
+              _bookmarkStory();
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

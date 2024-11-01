@@ -27,6 +27,11 @@ dependencies:
   url_launcher: ^6.3.1
   google_nav_bar: ^5.0.7
   line_icons: ^2.0.3
+  animated_floating_button_pro: ^0.0.2
+  curved_drawer_fork: ^0.0.1+1
+  sidebar_with_animation: ^0.0.3
+  cloud_firestore: ^5.4.4
+  intl: ^0.19.0
 
 
 dev_dependencies:

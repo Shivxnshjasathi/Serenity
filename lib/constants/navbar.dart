@@ -1,7 +1,9 @@
+import 'package:curved_drawer_fork/curved_drawer_fork.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:serenity/UI/bookmark/bookmarkscreen.dart';
 import 'package:serenity/UI/exercise/excercise.dart';
 import 'package:serenity/UI/qize/qize.dart';
 import 'package:serenity/UI/sholak/readshloke.dart';
@@ -10,6 +12,8 @@ import 'package:serenity/UI/timer/timer.dart';
 import 'package:serenity/constants/const.dart';
 
 class NavBarScreen extends StatefulWidget {
+  const NavBarScreen({super.key});
+
   @override
   _NavBarScreenState createState() => _NavBarScreenState();
 }
@@ -32,6 +36,16 @@ class _NavBarScreenState extends State<NavBarScreen> {
     });
   }
 
+  // Function to navigate with delay
+  void _navigateWithDelay(Widget screen) {
+    Future.delayed(const Duration(seconds: 1), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => screen),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +61,74 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ],
         ),
       ),
-      body: _pages[_currentIndex],
+      endDrawer: CurvedDrawer(
+        isEndDrawer: true,
+        color: Colors.black,
+        labelColor: Colors.white,
+        animationCurve: Curves.easeInOut,
+        buttonBackgroundColor: Colors.black,
+        width: 90.0,
+        items: const <DrawerItem>[
+          DrawerItem(
+            icon: Icon(
+              Icons.explore,
+              color: Colors.white,
+            ),
+            label: "Explore  ",
+          ),
+          DrawerItem(
+            icon: Icon(
+              Icons.person,
+              color: Colors.white,
+            ),
+            label: "Profile  ",
+          ),
+          DrawerItem(
+            icon: Icon(
+              Icons.bookmark,
+              color: Colors.white,
+            ),
+            label: "Bookmarks  ",
+          ),
+          DrawerItem(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            label: "Settings  ",
+          ),
+          DrawerItem(
+            icon: Icon(
+              Icons.info,
+              color: Colors.white,
+            ),
+            label: "About us  ",
+          ),
+        ],
+        onTap: (index) {
+          // Handle button tap with delay
+          switch (index) {
+            case 1:
+              _navigateWithDelay(const ProfileScreen());
+              break;
+            case 2:
+              _navigateWithDelay(const ContentScreen());
+              break;
+            case 3:
+              _navigateWithDelay(const SettingsScreen());
+              break;
+            case 4:
+              _navigateWithDelay(const AboutUsScreen());
+              break;
+            default:
+              break;
+          }
+        },
+      ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
         child: SingleChildScrollView(
@@ -64,7 +145,6 @@ class _NavBarScreenState extends State<NavBarScreen> {
             color: Colors.white,
             activeColor: accentColor,
             iconSize: 28, // Increase icon size for a larger appearance
-            //tabBackgroundColor: accentColor,
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 8), // Increase vertical padding
             selectedIndex: _currentIndex,
@@ -94,6 +174,55 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+// Example screen classes
+class ExploreScreen extends StatelessWidget {
+  const ExploreScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Explore")),
+      body: const Center(child: Text("Explore Screen")),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Profile")),
+      body: const Center(child: Text("Profile Screen")),
+    );
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Settings")),
+      body: const Center(child: Text("Settings Screen")),
+    );
+  }
+}
+
+class AboutUsScreen extends StatelessWidget {
+  const AboutUsScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("About Us")),
+      body: const Center(child: Text("About Us Screen")),
     );
   }
 }

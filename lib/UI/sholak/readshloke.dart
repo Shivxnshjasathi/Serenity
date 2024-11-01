@@ -1,3 +1,7 @@
+import 'package:animated_floating_button_pro/floating_action_button.dart';
+import 'package:animated_floating_button_pro/floating_button_props.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -97,6 +101,56 @@ class _SWidgetState extends State<SWidget> {
     });
   }
 
+  Future<void> _bookmarkShloka() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("User not logged in")),
+      );
+      return;
+    }
+
+    final userId = user.uid;
+
+    if (_shloka != null && _shloka!.isNotEmpty) {
+      try {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .collection('shlokaBookmarks')
+            .add({
+          'content': _shloka,
+          'tag': 'shloka',
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Shloka bookmarked successfully!",
+              style: GoogleFonts.poppins(color: Colors.white),
+            ),
+            backgroundColor: bgColor,
+          ),
+        );
+      } catch (e) {
+        print("Failed to bookmark shloka: $e");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                "Failed to bookmark shloka",
+                style: GoogleFonts.poppins(color: Colors.white),
+              ),
+              backgroundColor: bgColor),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("No shloka to bookmark")),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _flutterTts.stop();
@@ -107,13 +161,21 @@ class _SWidgetState extends State<SWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: _togglePlayPause,
-        backgroundColor: Colors.black,
-        child: Icon(
-          _isPlaying ? Icons.pause : Icons.play_arrow,
-          color: Colors.white,
-        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: AnimatedFloatingButton(
+        shadowColor: Colors.transparent,
+        padding: const EdgeInsets.all(16),
+        openIcon: const Icon(Icons.more_horiz),
+        childrenProps: [
+          FloatingButtonProps(
+            icon: _isPlaying ? Icons.pause : Icons.play_arrow,
+            action: _togglePlayPause,
+          ),
+          FloatingButtonProps(
+            icon: Icons.bookmark,
+            action: _bookmarkShloka,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(

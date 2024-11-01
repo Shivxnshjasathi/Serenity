@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:serenity/UI/splash.dart';
 import 'package:serenity/constants/const.dart';
 
@@ -35,6 +36,7 @@ class GenerativeAISample extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         useMaterial3: true,
+        fontFamily: GoogleFonts.poppins().fontFamily,
         inputDecorationTheme: const InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.transparent, width: 1.5),

@@ -1,3 +1,5 @@
+import 'package:animated_floating_button_pro/floating_action_button.dart';
+import 'package:animated_floating_button_pro/floating_button_props.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -8,6 +10,8 @@ import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Ensure this is imported
 
 class CalmingMediaWidget extends StatefulWidget {
   const CalmingMediaWidget({super.key});
@@ -24,7 +28,7 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
   late final FlutterTts _flutterTts;
   final ScrollController _scrollController = ScrollController();
   bool _loading = false;
-  String? _shloka;
+  String? _shloka; // Fixed typo
   bool _isPlaying = false;
 
   @override
@@ -75,12 +79,40 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
         _shloka = response.text;
       });
     } catch (e) {
-      _shloka = "Error generating playlists: ${e.toString()}";
+      setState(() {
+        _shloka = "Error generating playlists: ${e.toString()}";
+      });
     } finally {
       setState(() {
         _loading = false;
       });
     }
+  }
+
+  Future<void> _bookmarkRelaxationGuide() async {
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null || _shloka == null) return;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('factsBookmarks')
+        .add({
+      'content': _shloka,
+      'tag': 'facts',
+      'timestamp': FieldValue.serverTimestamp(),
+    });
+
+    HapticFeedback.vibrate();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Bookmarked this fact successfully!",
+          style: GoogleFonts.poppins(color: Colors.white),
+        ),
+        backgroundColor: bgColor,
+      ),
+    );
   }
 
   Future<void> _togglePlayPause() async {
@@ -108,13 +140,22 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: _togglePlayPause,
-        backgroundColor: Colors.black,
-        child: Icon(
-          _isPlaying ? Icons.pause : Icons.play_arrow,
-          color: Colors.white,
-        ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: AnimatedFloatingButton(
+        shadowColor: Colors.transparent,
+        padding: const EdgeInsets.all(16),
+        openIcon: const Icon(Icons.more_horiz),
+        childrenProps: [
+          FloatingButtonProps(
+            icon: _isPlaying ? Icons.pause : Icons.play_arrow,
+            action: _togglePlayPause,
+          ),
+          FloatingButtonProps(
+            icon: Icons
+                .bookmark_border, // Use a static icon, no state for simplicity
+            action: _bookmarkRelaxationGuide,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -220,29 +261,17 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
                         parentColor: accentColor,
                         buttonPosition: Position.bottomCenter,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Generate New Facts",
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                  )),
-                            ],
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                            "Generate Shloka",
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Lottie.asset(
-                        'assets/music.json',
-                        width: 350,
-                        height: 350,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                    const SizedBox(height: 15),
                   ],
                 ),
               ),
