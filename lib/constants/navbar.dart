@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:serenity/UI/about%20us/aboutus.dart';
 import 'package:serenity/UI/bookmark/bookmarkscreen.dart';
+import 'package:serenity/UI/chat/chatscreen.dart';
 import 'package:serenity/UI/exercise/excercise.dart';
 import 'package:serenity/UI/profile/profile.dart';
 import 'package:serenity/UI/qize/qize.dart';
@@ -68,7 +70,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
         labelColor: Colors.white,
         animationCurve: Curves.easeInOut,
         buttonBackgroundColor: Colors.black,
-        width: 90.0,
+        width: 75.0,
         items: const <DrawerItem>[
           DrawerItem(
             icon: Icon(
@@ -93,10 +95,10 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ),
           DrawerItem(
             icon: Icon(
-              Icons.settings,
+              Icons.chat_bubble,
               color: Colors.white,
             ),
-            label: "Settings  ",
+            label: "Community Chat  ",
           ),
           DrawerItem(
             icon: Icon(
@@ -107,7 +109,6 @@ class _NavBarScreenState extends State<NavBarScreen> {
           ),
         ],
         onTap: (index) {
-          // Handle button tap with delay
           switch (index) {
             case 1:
               _navigateWithDelay(const ProfileScreen());
@@ -116,7 +117,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
               _navigateWithDelay(const ContentScreen());
               break;
             case 3:
-              _navigateWithDelay(const SettingsScreen());
+              _navigateWithDelay(CommunityChatScreen());
               break;
             case 4:
               _navigateWithDelay(const AboutUsScreen());
@@ -200,18 +201,6 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Settings")),
       body: const Center(child: Text("Settings Screen")),
-    );
-  }
-}
-
-class AboutUsScreen extends StatelessWidget {
-  const AboutUsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("About Us")),
-      body: const Center(child: Text("About Us Screen")),
     );
   }
 }
