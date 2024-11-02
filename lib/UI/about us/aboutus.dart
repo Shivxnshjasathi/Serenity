@@ -13,14 +13,7 @@ class AboutUsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
-          'About Us',
-          style: GoogleFonts.poppins(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
+        title: Text('About Us', style: primaryTextStyle),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -37,13 +30,12 @@ class AboutUsScreen extends StatelessWidget {
                   Lottie.asset(
                     'assets/aboutus.json',
                     width: 350,
-                    height: 350,
+                    height: 300,
                     fit: BoxFit.contain,
                   ),
-                  const SizedBox(height: 16),
                   Text(
                     'Our Mission',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.libreBaskerville(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -54,7 +46,7 @@ class AboutUsScreen extends StatelessWidget {
                   Text(
                     'We aim to provide a supportive platform that empowers individuals through guided insights, wisdom from the Bhagavad Gita, and tools for personal growth. Our goal is to create a positive, uplifting environment where users can achieve mental clarity and resilience.',
                     style: GoogleFonts.poppins(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.grey[700],
                     ),
                     textAlign: TextAlign.center,
@@ -62,7 +54,7 @@ class AboutUsScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   Text(
                     'Our Team',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.libreBaskerville(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -73,7 +65,7 @@ class AboutUsScreen extends StatelessWidget {
                   Text(
                     'Our team consists of passionate developers, mental health advocates, and designers committed to making a difference in people\'s lives. Together, we work to integrate ancient wisdom with modern technology, creating meaningful experiences for our users.',
                     style: GoogleFonts.poppins(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.grey[700],
                     ),
                     textAlign: TextAlign.center,
@@ -81,7 +73,7 @@ class AboutUsScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   Text(
                     'Contact Us',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.libreBaskerville(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -92,7 +84,7 @@ class AboutUsScreen extends StatelessWidget {
                   Text(
                     'If you have any questions, feedback, or suggestions, feel free to reach out to us at support@serenityapp.com.',
                     style: GoogleFonts.poppins(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.grey[700],
                     ),
                     textAlign: TextAlign.center,
@@ -100,7 +92,7 @@ class AboutUsScreen extends StatelessWidget {
                   const SizedBox(height: 24),
                   Text(
                     'Follow Us',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.libreBaskerville(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
