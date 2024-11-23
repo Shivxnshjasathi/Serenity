@@ -2,6 +2,8 @@
 
 **SerenityAI** is a Flutter-based supportive and empathetic AI assistant designed to provide guidance grounded in the wisdom of the Bhagavad Gita. This application aims to help users navigate their challenges with spiritual insight and practical advice, fostering inner strength, clarity, and emotional resilience.
 
+try apk - https://drive.google.com/file/d/1KKvAKL23Yx2s-7x9V6u2vpEYo4Alb47K/view?usp=sharing
+
 ## Features
 
 - **Wisdom of the Bhagavad Gita**: For each user concern, SerenityAI shares relevant verses (shlokas) from the Gita and imparts life lessons that address the user's challenges.
@@ -43,3 +45,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - Inspired by the teachings of the Bhagavad Gita.
 - Flutter framework for building the application.
+  
