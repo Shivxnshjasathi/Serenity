@@ -170,7 +170,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
               ),
               GButton(
                 icon: LineIcons.questionCircle,
-                text: 'Quiz',
+                text: 'Facts',
               ),
             ],
           ),

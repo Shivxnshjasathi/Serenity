@@ -20,7 +20,7 @@ class StoryWidget extends StatefulWidget {
 }
 
 class _StoryWidgetState extends State<StoryWidget> {
-  static const String apiKey = 'AIzaSyAPHtUCHKOZ2YAOOlPETWaVFaBAoVKhs6U';
+  static String apiKey = geminikey;
 
   late final GenerativeModel _model;
   late final ChatSession _chat;
@@ -34,7 +34,7 @@ class _StoryWidgetState extends State<StoryWidget> {
   void initState() {
     super.initState();
     _model = GenerativeModel(
-      model: 'gemini-pro',
+      model: 'gemini-1.5-flash',
       apiKey: apiKey,
     );
     _chat = _model.startChat();

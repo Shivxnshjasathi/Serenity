@@ -11,7 +11,7 @@ import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:serenity/constants/const.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Ensure this is imported
+import 'package:firebase_auth/firebase_auth.dart';
 
 class CalmingMediaWidget extends StatefulWidget {
   const CalmingMediaWidget({super.key});
@@ -21,21 +21,22 @@ class CalmingMediaWidget extends StatefulWidget {
 }
 
 class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
-  static const String apiKey = 'AIzaSyAPHtUCHKOZ2YAOOlPETWaVFaBAoVKhs6U';
+  static String apiKey = geminikey;
 
   late final GenerativeModel _model;
   late final ChatSession _chat;
   late final FlutterTts _flutterTts;
   final ScrollController _scrollController = ScrollController();
   bool _loading = false;
-  String? _shloka; // Fixed typo
+  String? _shloka;
   bool _isPlaying = false;
+  bool _isBookmarked = false; // Tracks the bookmark state
 
   @override
   void initState() {
     super.initState();
     _model = GenerativeModel(
-      model: 'gemini-pro',
+      model: 'gemini-1.5-flash',
       apiKey: apiKey,
     );
     _chat = _model.startChat();
@@ -93,6 +94,19 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
     final userId = FirebaseAuth.instance.currentUser?.uid;
     if (userId == null || _shloka == null) return;
 
+    if (_isBookmarked) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "This fact is already bookmarked!",
+            style: GoogleFonts.poppins(color: Colors.white),
+          ),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
+      return;
+    }
+
     await FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
@@ -101,6 +115,10 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
       'content': _shloka,
       'tag': 'facts',
       'timestamp': FieldValue.serverTimestamp(),
+    });
+
+    setState(() {
+      _isBookmarked = true;
     });
 
     HapticFeedback.vibrate();
@@ -151,8 +169,9 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
             action: _togglePlayPause,
           ),
           FloatingButtonProps(
-            icon: Icons
-                .bookmark_border, // Use a static icon, no state for simplicity
+            icon: _isBookmarked
+                ? Icons.bookmark
+                : Icons.bookmark_border, // Dynamic icon
             action: _bookmarkRelaxationGuide,
           ),
         ],
@@ -210,34 +229,6 @@ class _CalmingMediaWidgetState extends State<CalmingMediaWidget> {
                       styleSheet: MarkdownStyleSheet(
                         p: GoogleFonts.poppins(
                             color: Colors.black, fontWeight: FontWeight.w400),
-                        h1: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h2: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h3: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h4: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h5: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        h6: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        blockquote: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        strong: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        em: GoogleFonts.poppins(
-                          color: Colors.black,
-                        ),
-                        code: GoogleFonts.poppins(color: Colors.black),
                       ),
                     ),
                     const SizedBox(height: 40),

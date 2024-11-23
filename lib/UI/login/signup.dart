@@ -8,17 +8,17 @@ import 'package:lottie/lottie.dart';
 import 'package:neopop/widgets/buttons/neopop_button/neopop_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:serenity/UI/landingscreens/landingscreen.dart';
-import 'package:serenity/UI/login/signup.dart';
+import 'package:serenity/UI/login/login.dart';
 import 'package:serenity/constants/const.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Signup extends StatefulWidget {
+  const Signup({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoggingIn = false;
@@ -42,7 +42,7 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Future<void> _login() async {
+  Future<void> _signUp() async {
     final String email = _emailController.text.trim();
     final String password = _passwordController.text.trim();
 
@@ -51,7 +51,7 @@ class _LoginState extends State<Login> {
         SnackBar(
           backgroundColor: bgColor,
           content: Text(
-            'Please enter your details to Login.',
+            'Please enter your details to Signup.',
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -64,20 +64,33 @@ class _LoginState extends State<Login> {
     }
 
     setState(() {
-      _isLoggingIn = true;
+      _isSigningUp = true;
     });
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      // Successful login, navigate to the landing screen
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: bgColor,
           content: Text(
-            'Login successful!',
+            'Sign-up successful! Please log in.',
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: bgColor,
+          content: Text(
+            'Error: ${e.message}',
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w500,
@@ -88,78 +101,12 @@ class _LoginState extends State<Login> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const LandingPage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: bgColor,
-          content: Text(
-            'Error: ${e.message}',
-            style: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ),
+        MaterialPageRoute(builder: (context) => const Login()),
       );
     } finally {
       setState(() {
-        _isLoggingIn = false;
+        _isSigningUp = false;
       });
-    }
-  }
-
-  Future<void> _resetPassword() async {
-    final String email = _emailController.text.trim();
-
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: bgColor,
-          content: Text(
-            'Please enter your email to reset password.',
-            style: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
-      return;
-    }
-
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: bgColor,
-          content: Text(
-            'Password reset email sent!',
-            style: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: bgColor,
-          content: Text(
-            'Error: ${e.message}',
-            style: GoogleFonts.poppins(
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
     }
   }
 
@@ -208,7 +155,7 @@ class _LoginState extends State<Login> {
                                   )),
                               const SizedBox(height: 10),
                               Text(
-                                "Log in to your account",
+                                "create a new account to get started",
                                 style: GoogleFonts.libreBaskerville(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w400,
@@ -306,19 +253,8 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: _resetPassword,
-                              child: Text("Forgot Password?",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  )),
-                            ),
-                          ],
+                        const SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),
@@ -333,38 +269,46 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       width: 200,
                       child: NeoPopButton(
-                        color: accentColor,
-                        onTapUp: () {
-                          _login();
-                          HapticFeedback.vibrate();
+                        color: Colors.black,
+                        onTapUp: () async {
+                          try {
+                            // Perform the sign-up process
+                            await _signUp(); // Perform the sign-up process
+
+                            HapticFeedback.vibrate();
+                          } catch (e) {
+                            // Handle any errors during the sign-up process
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Error: $e')),
+                            );
+                          }
                         },
                         onTapDown: () => HapticFeedback.vibrate(),
-                        parentColor: accentColor,
+                        parentColor: Colors.blue,
                         buttonPosition: Position.bottomCenter,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 15),
+                              horizontal: 50, vertical: 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (_isLoggingIn)
+                              if (_isSigningUp)
                                 const CircularProgressIndicator(
-                                  color: Colors.black,
+                                  color: accentColor,
                                 )
                               else
                                 Row(
                                   children: [
-                                    Text("Log In",
+                                    Text("Sign Up",
                                         style: GoogleFonts.poppins(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           fontSize: 12,
                                         )),
                                     const SizedBox(
                                       width: 10,
                                     ),
                                     const Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.black,
+                                      LineIcons.arrowRight,
                                       size: 15,
                                     ),
                                   ],
@@ -374,61 +318,21 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-
-                    Row(
-                      children: [
-                        // Text("Sign up",
-                        //     style: GoogleFonts.poppins(
-                        //       color: Colors.black,
-                        //       fontSize: 10,
-                        //     )),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const Signup()),
-                              );
-                              HapticFeedback.vibrate();
-                            },
-                            icon: const Icon(
-                              LineIcons.userPlus,
-                              color: Colors.black,
-                            )),
-                      ],
-                    ),
-
-                    // NeoPopButton(
-                    //   color: Colors.black,
-                    //   onTapUp: () {
-
-                    //   },
-                    //   onTapDown: () => HapticFeedback.vibrate(),
-                    //   parentColor: Colors.blue,
-                    //   buttonPosition: Position.bottomCenter,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.symmetric(
-                    //         horizontal: 20, vertical: 15),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         if (_isSigningUp)
-                    //           const CircularProgressIndicator(
-                    //             color: accentColor,
-                    //           )
-                    //         else
-                    //           Text("Sign Up",
-                    //               style: GoogleFonts.poppins(
-                    //                 color: Colors.white,
-                    //                 fontSize: 12,
-                    //               )),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => Login()),
+                          );
+                          HapticFeedback.vibrate();
+                        },
+                        icon: const Icon(
+                          LineIcons.rocket,
+                          color: Colors.black,
+                        ))
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
