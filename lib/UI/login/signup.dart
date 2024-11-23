@@ -76,7 +76,7 @@ class _SignupState extends State<Signup> {
         SnackBar(
           backgroundColor: bgColor,
           content: Text(
-            'Sign-up successful! Please log in.',
+            'Sign-up successful! Please Login Click on Rocket Icon.',
             style: GoogleFonts.poppins(
               fontSize: 12,
               fontWeight: FontWeight.w500,
