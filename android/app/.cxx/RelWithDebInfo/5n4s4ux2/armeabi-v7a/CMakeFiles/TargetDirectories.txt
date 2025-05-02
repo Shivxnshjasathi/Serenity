@@ -1,0 +1,2 @@
+D:/Software Projects/Serenity/android/app/.cxx/RelWithDebInfo/5n4s4ux2/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Software Projects/Serenity/android/app/.cxx/RelWithDebInfo/5n4s4ux2/armeabi-v7a/CMakeFiles/rebuild_cache.dir

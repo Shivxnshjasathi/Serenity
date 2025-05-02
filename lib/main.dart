@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:serenity/UI/splash.dart';
-import 'package:serenity/constants/const.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
